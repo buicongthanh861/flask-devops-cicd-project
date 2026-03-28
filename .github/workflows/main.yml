@@ -27,7 +27,7 @@ jobs:
           pip install flake8
       
       - name: Run flake8
-        run: flake8 . --max-line-length-100
+        run: flake8 . --max-line-length=100
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
