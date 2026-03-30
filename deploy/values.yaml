@@ -1,0 +1,14 @@
+microservice:
+  name: flask-app
+  namespace: my-flask-app
+  replicas: 2
+  minReplicas: 1
+  maxReplicas: 5
+
+workload:
+  image: congthanh19/flask-app
+  tag: "latest"
+  port: 5000
+  resources:
+      memory: "256Mi"
+      cpu: "128m"
