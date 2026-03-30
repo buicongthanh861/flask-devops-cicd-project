@@ -7,7 +7,7 @@ microservice:
 
 workload:
   image: congthanh19/flask-app
-  tag: "latest"
+  tag: "dc928b2877e7f00042e113883dc1b50497c77a46"
   port: 5000
   resources:
       memory: "256Mi"
