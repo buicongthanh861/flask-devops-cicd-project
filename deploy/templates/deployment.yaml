@@ -7,6 +7,11 @@ metadata:
     app: {{ .Values.microservice.name }}
 spec:
   replicas: {{ .Values.microservice.replicas }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
   selector:
     matchLabels:
       app: {{ .Values.microservice.name }}
@@ -21,6 +26,14 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: {{ .Values.workload.port }}
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.workload.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
           resources:
             limits:
               memory: {{ .Values.workload.resources.memory }}
