@@ -3,7 +3,7 @@ import requests
 
 app = Flask(__name__)
 
-API_KEY = "ef9a3d31837bf5a5ea1f5085a43aab92"  # Replace with your OpenWeatherMap API key
+API_KEY = "ef9a3d31837bf5a5ea1f5085a43aab92"
 BASE_URL = "http://api.openweathermap.org/data/2.5/weather"
 
 
@@ -19,6 +19,7 @@ def index():
             weather_data = {"error": "City not found!"}
 
     return render_template("index.html", weather_data=weather_data)
+
 
 @app.route("/health")
 def health_check():
