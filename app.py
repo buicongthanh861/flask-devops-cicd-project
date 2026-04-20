@@ -8,8 +8,14 @@ app = Flask(__name__)
 metrics = PrometheusMetrics(app)
 
 SEARCH_COUNTER = Counter("weather_searches_total", "Total number of weather searches")
-SEARCH_FAILED_COUNTER = Counter("weather_searches_failed_total", "Total number of failed weather searches")
-SEARCH_BY_CITY_COUNTER = Counter("weather_searches_by_city_total", "Total number of weather searches by city", ["city"])
+SEARCH_FAILED_COUNTER = Counter(
+    "weather_searches_failed_total", "Total number of failed weather searches"
+)
+SEARCH_BY_CITY_COUNTER = Counter(
+    "weather_searches_by_city_total",
+    "Total number of weather searches by city",
+    ["city"],
+)
 
 API_KEY = "ef9a3d31837bf5a5ea1f5085a43aab92"
 BASE_URL = "http://api.openweathermap.org/data/2.5/weather"
@@ -35,6 +41,7 @@ def index():
 @app.route("/health")
 def health_check():
     return {"status": "healthy"}, 200
+
 
 @app.route("/metrics")
 def metrics_endpoint():
