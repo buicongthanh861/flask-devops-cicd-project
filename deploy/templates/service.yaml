@@ -3,6 +3,8 @@ kind: Service
 metadata:
   name: {{ .Values.microservice.name }}-service
   namespace: {{ .Values.microservice.namespace }}
+  labels:
+    app: {{ .Values.microservice.name }}
 spec:
   type: ClusterIP
   selector:
