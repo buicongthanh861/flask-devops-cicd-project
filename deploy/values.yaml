@@ -6,7 +6,7 @@ microservice:
   maxReplicas: 5
 workload:
   image: congthanh19/flask-app
-  tag: "dced18dd8542b46e2cda99cb561caa8a1857089b"
+  tag: "d4d98f25cb54b0a8848e9a8229f7f1b7ab50a4b8"
   port: 5000
   resources:
     memory: "256Mi"
