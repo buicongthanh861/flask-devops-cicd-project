@@ -2,7 +2,13 @@ import time
 from flask import Flask, render_template, request, Response
 import requests
 from prometheus_flask_exporter import PrometheusMetrics
-from prometheus_client import Counter, Gauge, generate_latest, CONTENT_TYPE_LATEST
+from prometheus_client import (
+    Counter,
+    Gauge,
+    Summary,
+    generate_latest,
+    CONTENT_TYPE_LATEST,
+)
 
 app = Flask(__name__)
 metrics = PrometheusMetrics(app)
@@ -21,7 +27,10 @@ SEARCH_BY_CITY_COUNTER = Counter(
 IN_PROGRESS_REQUESTS = Gauge(
     "weather_app_in_progress", "Number of in-progress weather requests"
 )
-
+# Summary để đo thời gian xử lý request
+REQUEST_DURATION = Summary(
+    "weather_request_duration_seconds", "Duration of weather requests in seconds"
+)
 API_KEY = "ef9a3d31837bf5a5ea1f5085a43aab92"
 BASE_URL = "http://api.openweathermap.org/data/2.5/weather"
 
@@ -33,6 +42,7 @@ def index():
         # Bắt đầu xử lý: Tăng Gauge và Counter tổng
         IN_PROGRESS_REQUESTS.inc()
         SEARCH_COUNTER.inc()
+        start_time = time.time()  # Lưu thời điểm bắt đầu xử lý
 
         try:
             city = request.form.get("city")
@@ -53,6 +63,8 @@ def index():
                     SEARCH_FAILED_COUNTER.inc()
                     weather_data = {"error": "City not found!"}
         finally:
+            duration = time.time() - start_time  # Lấy thời gian đã trôi qua
+            REQUEST_DURATION.observe(duration)
             # Kết thúc xử lý: Luôn luôn giảm Gauge (dù thành công hay lỗi)
             IN_PROGRESS_REQUESTS.dec()
 
