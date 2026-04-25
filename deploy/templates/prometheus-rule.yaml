@@ -14,8 +14,8 @@ spec:
         - record: job:flask_http_request:rate5m
           expr: sum(rate(http_request_duration_seconds_count[5m])) by (pod, handler)
         - alert: HighCPUUsage
-          expr: job:node_cpu_seconds:usage_percentage > 0.8
-          for: 1m
+          expr: job:node_cpu_seconds:usage_percentage > 0.2
+          for: 10s
           labels:
             severity: warning
           annotations:
