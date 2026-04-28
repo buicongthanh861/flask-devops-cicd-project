@@ -37,3 +37,14 @@ spec:
           annotations:
             summary: "High request latency on {{`{{ $labels.pod }}`}}"
             description: "Request latency is above 0.5s for more than 5 minute on {{`{{ $labels.pod }}`}}"
+        - alert: TestAlertAlwaysFiring
+          expr: vector(1)
+          for: 1m
+          labels:
+            severity: warning
+            service: flask-app
+            team: backend
+            environment: production
+          annotations:
+            summary: "Test alert always firing"
+            description: "This is a test alert that always fires"

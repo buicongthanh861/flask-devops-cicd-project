@@ -30,7 +30,7 @@ IN_PROGRESS_REQUESTS = Gauge(
 # Summary để đo thời gian xử lý request
 REQUEST_DURATION = Histogram(
     "weather_request_duration_seconds", "Duration of weather request processing in seconds",
-    bucket=[0.5, 1, 2, 3, 5, 10]
+    buckets=[0.5, 1, 2, 3, 5, 10]
 )
 API_KEY = "ef9a3d31837bf5a5ea1f5085a43aab92"
 BASE_URL = "http://api.openweathermap.org/data/2.5/weather"
