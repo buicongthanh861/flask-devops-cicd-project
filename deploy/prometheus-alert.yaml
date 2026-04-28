@@ -1,22 +1,18 @@
 alertmanager:
-  config:
-    global:
-      smtp_from: 'buicongthanh861@gmail.com'
-      smtp_smarthost: 'smtp.gmail.com:587'
-      smtp_auth_username: 'buicongthanh861@gmail.com'
-      smtp_auth_password: 'ggqs qmts ullz ruca'
-      smtp_require_tls: true
+  alertmanagerSpec:
+    config:
+      global:
+        smtp_from: 'buicongthanh861@gmail.com'
+        smtp_smarthost: 'smtp.gmail.com:587'
+        smtp_auth_username: 'buicongthanh861@gmail.com'
+        smtp_auth_password: 'ggqs qmts ullz ruca'
+        smtp_require_tls: true
 
-    route:
-      group_by: ['alertname', 'job']
-      receiver: 'gmail-notifications'
-      routes:
-      - match:
-          service: flask-app
+      route:
         receiver: 'gmail-notifications'
 
-    receivers:
-    - name: 'gmail-notifications'
-      email_configs:
-      - to: 'buicongthanh861@gmail.com'
-        send_resolved: true
+      receivers:
+      - name: 'gmail-notifications'
+        email_configs:
+        - to: 'buicongthanh861@gmail.com'
+          send_resolved: true
