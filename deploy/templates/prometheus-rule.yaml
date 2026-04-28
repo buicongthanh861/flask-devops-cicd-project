@@ -17,15 +17,15 @@ spec:
           expr: sum(rate(http_request_duration_seconds_sum[5m])) by (pod, handler,method) / sum(rate(http_request_duration_seconds_count[5m])) by (pod, handler,method)
         - alert: HighCPUUsage
           expr: job:node_cpu_seconds:usage_percentage > 0.0001
-          for: 5m
+          for: 10s
           labels:
             severity: warning
             service: flask-app
             team: backend
             environment: production
           annotations:
-            summary: High CPU usage on {{ $labels.instance }}
-            description: "CPU usage is above 80% for more than 5 minute on {{ $labels.instance }}"
+            summary: "High CPU usage on {{`{{ $labels.instance }}`}}"
+            description: "CPU usage is above 80% for more than 5 minute on {{`{{ $labels.instance }}`}}"
         - alert: HighRequestLatency
           expr: job:app_response_time_seconds:mean5m{job="flask-app"} > 0.5
           for: 5m
@@ -35,5 +35,5 @@ spec:
             team: backend
             environment: production
           annotations:
-            summary: High request latency on {{ $labels.pod }}
-            description: "Request latency is above 0.5s for more than 5 minute on {{ $labels.pod }}"
+            summary: "High request latency on {{`{{ $labels.pod }}`}}"
+            description: "Request latency is above 0.5s for more than 5 minute on {{`{{ $labels.pod }}`}}"
